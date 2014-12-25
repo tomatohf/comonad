@@ -1,5 +1,7 @@
 module Zipper where
 
+import Comonad
+
 data ListZipper a = Zip [a] a [a]
 
 left :: ListZipper a -> ListZipper a
@@ -16,3 +18,8 @@ list (Zip ls a rs) n = reverse (take n ls) ++ a:(take n rs)
 
 instance Functor ListZipper where
     fmap f (Zip ls a rs) = Zip (fmap f ls) (f a) (fmap f rs)
+
+instance Comonad ListZipper where
+    extract = get
+    duplicate a = Zip (shift left) a (shift right)
+        where shift move = tail $ iterate move a
