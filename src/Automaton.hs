@@ -29,3 +29,10 @@ rule world = case length alives of
 
 evolve :: CellularWorld -> CellularWorld
 evolve = extend rule
+
+display :: Int -> CellularWorld -> String
+display n = unlines . fmap line . plane n
+  where
+    line = fmap point
+    point True  = '*'
+    point False = ' '

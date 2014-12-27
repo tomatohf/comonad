@@ -21,6 +21,10 @@ left = mapWorld $ fmap back
 right :: World a -> World a
 right = mapWorld $ fmap forward
 
+plane :: Int -> World a -> [[a]]
+plane n = map listN . listN . getWorld
+    where listN = list n
+
 instance Functor World where
     fmap = mapWorld . fmap . fmap
 
